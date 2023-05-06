@@ -6,8 +6,9 @@ export class Education extends Component {
     return (
       <div className="education">
         <h2>{degName}</h2>
-        <span>{uniName}</span>
-        <span>{compYear}</span>
+        <p>
+          <span>{uniName}</span> <span>-</span> <span>{compYear}</span>
+        </p>
       </div>
     );
   }

@@ -5,12 +5,15 @@ export class CommonDetails extends Component {
     const { name, phoneNumber, email, website, summary } =
       this.props.details;
     return (
-      <div>
-        <h1 className="name">{name}</h1>
-        <span>{phoneNumber}</span>
-        <span>{email}</span>
-        <span>{website}</span>
-        <p>{summary}</p>
+      <div className="commonDetails">
+        <h1>{name}</h1>
+        <div>
+          <span>{phoneNumber}</span>
+          <span>{email}</span>
+          <span>{website}</span>
+        </div>
+        <span className="title">Summary</span>
+        <pre>{summary}</pre>
       </div>
     );
   }

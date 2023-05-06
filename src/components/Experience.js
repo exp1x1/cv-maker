@@ -2,19 +2,20 @@ import { Component } from "react";
 
 export class Experience extends Component {
   render() {
-    const { title, compName, startDate, endDate, expSummary } =
+    const { jobTitle, compName, startDate, endDate, expSummary } =
       this.props.data;
 
     return (
       <div className="experience">
-        <h2>{title}</h2>
-        <span>{compName}</span>
+        <h2>{jobTitle}</h2>
         <p>
+          <span>{compName}</span>
+          <span>{" ‖ "}</span>
           <span>{startDate}</span>
-          to
+          <span>{" to "}</span>
           <span>{endDate}</span>
         </p>
-        <p>{expSummary}</p>
+        <pre>{expSummary}</pre>
       </div>
     );
   }

@@ -6,6 +6,8 @@ import { EducationInput } from "./components/EducationInput";
 import { generateUniqueKey } from "./helpFunction";
 import { Education } from "./components/Education";
 import { Experience } from "./components/Experience";
+import { Skills } from "./components/skills";
+import { HeadTitle } from "./components/HeadTitle";
 
 class App extends Component {
   constructor() {
@@ -39,11 +41,11 @@ class App extends Component {
       },
       exp: {
         "4dt6": {
-          title: "web Dev",
-          compName: "oneShot",
-          startDate: "",
-          endDate: "",
-          expSummary: "my SUM",
+          jobTitle: "Job Title",
+          compName: "Company Name",
+          startDate: "2023-01-01",
+          endDate: "2023-04-01",
+          expSummary: "-> Your Experience",
         },
       },
       inEdu: {
@@ -58,8 +60,8 @@ class App extends Component {
       },
       edu: {
         gst42: {
-          degName: "Your Degree Name",
-          uniName: "Your uni Name",
+          degName: "Degree Name",
+          uniName: "Institution Name",
           compYear: "Year of completion",
         },
       },
@@ -92,13 +94,13 @@ class App extends Component {
         });
         break;
 
-      case "summary":
+      case "userSummary":
         this.setState({
           summary: e.target.value,
         });
         break;
 
-      case "skills":
+      case "userSkills":
         const splitSkills = e.target.value.split(",");
         this.setState({
           skills: splitSkills,
@@ -126,11 +128,11 @@ class App extends Component {
     };
     const newExp = {
       [keyGen]: {
-        title: "",
-        compName: "",
-        startDate: "",
-        endDate: "",
-        expSummary: "",
+        jobTitle: "Job Title",
+        compName: "Company Name",
+        startDate: "2023-01-01",
+        endDate: "2023-04-01",
+        expSummary: "-> Your Experience",
       },
     };
     this.setState({
@@ -147,7 +149,7 @@ class App extends Component {
 
   updateExp(e) {
     const { exp } = this.state;
-    const element = e.target.parentNode.getAttribute("id");
+    const element = e.target.parentNode.parentNode.getAttribute("id");
     const currentExp = exp[element];
 
     this.setState({
@@ -196,9 +198,9 @@ class App extends Component {
     };
     const newEdu = {
       [keyGen]: {
-        degName: "",
-        uniName: "",
-        compYear: "",
+        degName: "Degree Name",
+        uniName: "Institution Name",
+        compYear: "Year of completion",
       },
     };
 
@@ -216,7 +218,7 @@ class App extends Component {
 
   updateEdu(e) {
     const { edu } = this.state;
-    const element = e.target.parentNode.getAttribute("id");
+    const element = e.target.parentNode.parentNode.getAttribute("id");
     const currentEdu = edu[element];
 
     this.setState({
@@ -254,28 +256,34 @@ class App extends Component {
 
     return (
       <div className="App">
-        <div
-          className="inputForm"
-          onLoad={() => {
-            this.addEduInput();
-          }}
-        >
+        <div className="inputForm">
           <CommonDetailsInputs func={this.updateCommonDetails} />
+
+          <HeadTitle title="Education Input" />
           {Object.values(inEdu)}
           <button onClick={this.addEduInput}>Add Education</button>
+
+          <HeadTitle title="Work Experience Input" />
           {Object.values(inExp)}
           <button onClick={this.addWorkExpInput}>Add Work Exp</button>
         </div>
         <div className="cv-holder">
-          <CommonDetails details={this.state} />
-          <div className="expHolder">
-            {Object.values(exp).map((e) => {
-              return <Experience data={e} key={generateUniqueKey(6)} />;
-            })}
+          <div className="commonDetailHolder">
+            <CommonDetails details={this.state} />
+            <Skills skill={this.state.skills} />
           </div>
+
           <div className="eduHolder">
+            <HeadTitle title="Education" />
             {Object.values(edu).map((e) => {
               return <Education data={e} key={generateUniqueKey(6)} />;
+            })}
+          </div>
+
+          <div className="expHolder">
+            <HeadTitle title="Experience" />
+            {Object.values(exp).map((e) => {
+              return <Experience data={e} key={generateUniqueKey(6)} />;
             })}
           </div>
         </div>
