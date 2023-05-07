@@ -1,4 +1,6 @@
 import { Component } from "react";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 import { CommonDetailsInputs } from "./components/CommonInput";
 import { CommonDetails } from "./components/CommonDetails";
 import { ExperienceInput } from "./components/ExperienceInput";
@@ -253,6 +255,16 @@ class App extends Component {
     });
   }
 
+  downloadCV() {
+    const cv = document.getElementById("cv-holder");
+    html2canvas(cv).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF();
+      pdf.addImage(imgData, "JPEG", 0, 0);
+      pdf.save("download.pdf");
+    });
+  }
+
   render() {
     const { inExp, inEdu, exp, edu } = this.state;
 
@@ -269,7 +281,7 @@ class App extends Component {
           {Object.values(inExp)}
           <button onClick={this.addWorkExpInput}>Add Work Exp</button>
         </div>
-        <div className="cv-holder">
+        <div id="cv-holder">
           <div className="commonDetailHolder">
             <CommonDetails details={this.state} />
             <Skills skill={this.state.skills} />
@@ -289,6 +301,9 @@ class App extends Component {
             })}
           </div>
         </div>
+        <button id="downloadPdfBtn" onClick={this.downloadCV}>
+          DownLoad CV
+        </button>
       </div>
     );
   }

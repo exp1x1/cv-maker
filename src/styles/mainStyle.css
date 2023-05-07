@@ -64,7 +64,18 @@ pre {
   padding: 5px;
 }
 
-/*  */
+/* stick component */
+
+#downloadPdfBtn {
+  position: absolute;
+  top: 2%;
+  right: 1%;
+
+  
+}
+
+
+/*main styling  */
 .App {
   min-height: 100vh;
 
@@ -131,7 +142,7 @@ pre {
 
 /* styling cv  */
 
-.cv-holder {
+#cv-holder {
   /* display: flex; */
   /* flex-direction: column; */
   background-color: #fff;
