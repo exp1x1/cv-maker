@@ -73,6 +73,8 @@ pre {
 
   padding: 12px;
   background-color: #f7f7f7;
+
+  font-family: "Poltawski Nowy", serif;
 }
 
 .inputForm {
@@ -218,7 +220,6 @@ pre {
 
   font-size: 1.3rem;
   gap: 7px;
-
 }
 
 .experience > h2 {

@@ -149,8 +149,10 @@ class App extends Component {
 
   updateExp(e) {
     const { exp } = this.state;
-    const element = e.target.parentNode.parentNode.getAttribute("id");
+    const element = e.target.getAttribute("data-ids");
     const currentExp = exp[element];
+
+    console.log(element);
 
     this.setState({
       exp: {
@@ -165,7 +167,7 @@ class App extends Component {
 
   deleteExpInput(e) {
     const { inExp, exp } = this.state;
-    const element = e.target.parentNode.getAttribute("id");
+    const element = e.target.getAttribute("data-ids");
 
     const newExpInput = { ...inExp };
     const newExp = { ...exp };
@@ -218,7 +220,7 @@ class App extends Component {
 
   updateEdu(e) {
     const { edu } = this.state;
-    const element = e.target.parentNode.parentNode.getAttribute("id");
+    const element = e.target.getAttribute("data-ids");
     const currentEdu = edu[element];
 
     this.setState({
@@ -235,7 +237,7 @@ class App extends Component {
   deleteEduInput(e) {
     const { inEdu, edu } = this.state;
 
-    const element = e.target.parentNode.getAttribute("id");
+    const element = e.target.getAttribute("data-ids");
     const newEduInput = { ...inEdu };
     const newEdu = { ...edu };
     delete newEduInput[element];

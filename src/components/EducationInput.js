@@ -12,7 +12,7 @@ export class EducationInput extends Component {
           Education
           <input
             typeof="text"
-            // data-alt-id="degInputName"
+            data-ids={this.props.ids}
             className="degName"
             placeholder="Education Name"
           ></input>
@@ -21,7 +21,7 @@ export class EducationInput extends Component {
           Institution
           <input
             type="text"
-            // data-alt-id="uniInputName"
+            data-ids={this.props.ids}
             className="uniName"
             placeholder="Institution Name"
           ></input>
@@ -29,13 +29,17 @@ export class EducationInput extends Component {
         <label>
           Completed Year
           <input
+            data-ids={this.props.ids}
             type="number"
-            // data-alt-id="compInputYear"
             placeholder="Completed Year"
             className="compYear"
           ></input>
         </label>
-        <button className="eduRemoveBtn" onClick={this.props.funcD}>
+        <button
+          className="eduRemoveBtn"
+          data-ids={this.props.ids}
+          onClick={this.props.funcD}
+        >
           Remove Education
         </button>
       </div>
