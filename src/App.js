@@ -245,6 +245,8 @@ class App extends Component {
     delete newEduInput[element];
     delete newEdu[element];
 
+    console.log("test-branch");
+
     this.setState({
       inEdu: {
         ...newEduInput,
