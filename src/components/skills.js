@@ -1,30 +1,29 @@
 import { generateUniqueKey } from "../helpFunction";
 
-export function Skills(props) {
-  const skill = props.skill;
+export const Skills = ({ skills }) => {
+  const splitSkills = skills.split(",");
 
-  if (skill.length === 0) {
-    return (
-      <div className="skillHolder">
-        <span className="title">Skills</span>
-        <ul>
-          <li>first Skill</li>
-          <li>second Skill</li>
-          <li>third Skill</li>
-        </ul>
-      </div>
-    );
-  } else {
-    return (
-      <div className="skillHolder">
-        <span className="title">Skills</span>
+  const baseSkills = (
+    <ul>
+      <li>first Skill</li>
+      <li>second Skill</li>
+      <li>third Skill</li>
+    </ul>
+  );
 
-        <ul>
-          {skill.map((e) => {
-            return <li key={generateUniqueKey(3)}>{e}</li>;
-          })}
-        </ul>
-      </div>
-    );
-  }
-}
+  const renderSkills = (
+    <ul>
+      {splitSkills.map((e) => {
+        return <li key={generateUniqueKey(3)}>{e}</li>;
+      })}
+    </ul>
+  );
+
+  return (
+    <div className="skillHolder">
+      <span className="title">Skills</span>
+      {/* if skills array is empty render baseSkills otherwise render skills */}
+      {skills !== "" ? renderSkills : baseSkills}
+    </div>
+  );
+};

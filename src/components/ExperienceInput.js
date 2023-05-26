@@ -2,14 +2,14 @@ export function ExperienceInput(props) {
   const ids = props.ids;
 
   return (
-    <div id={ids} onChange={props.funcUpdate} className="expForm">
+    <div id={ids} onChange={props.handleChange} className="expForm">
       <label>
         Job Title
         <input
           type="text"
           className="jobTitle"
           placeholder="Job Title"
-          ids={ids}
+          data-ids={ids}
         ></input>
       </label>
       <label>
@@ -18,18 +18,18 @@ export function ExperienceInput(props) {
           type="text"
           className="compName"
           placeholder="company"
-          ids={ids}
+          data-ids={ids}
         ></input>
       </label>
       <div className="expDateInput">
         <label>
           Start Date
-          <input type="date" className="startDate" ids={ids}></input>
+          <input type="date" className="startDate" data-ids={ids}></input>
         </label>
         {/* <span>to</span> */}
         <label>
           End Date
-          <input type="date" className="endDate" ids={ids}></input>
+          <input type="date" className="endDate" data-ids={ids}></input>
         </label>
       </div>
 
@@ -38,10 +38,14 @@ export function ExperienceInput(props) {
         <textarea
           placeholder="your experience"
           className="expSummary"
-          ids={ids}
+          data-ids={ids}
         ></textarea>
       </label>
-      <button className="removeBtn" ids={ids} onClick={props.funcD}>
+      <button
+        className="removeBtn"
+        data-ids={ids}
+        onClick={props.handelDelete}
+      >
         remove
       </button>
     </div>

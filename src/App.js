@@ -1,133 +1,120 @@
-import { Component } from "react";
+import React, { useState } from "react";
+
+import { generateUniqueKey } from "./helpFunction";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+
+// input form component
 import { CommonDetailsInputs } from "./components/CommonInput";
-import { CommonDetails } from "./components/CommonDetails";
 import { ExperienceInput } from "./components/ExperienceInput";
 import { EducationInput } from "./components/EducationInput";
-import { generateUniqueKey } from "./helpFunction";
-import { Education } from "./components/Education";
-import { Experience } from "./components/Experience";
-import { Skills } from "./components/skills";
+
+// render component
 import { HeadTitle } from "./components/HeadTitle";
+import { CommonDetails } from "./components/CommonDetails";
+import { Skills } from "./components/skills";
+import { Experience } from "./components/Experience";
+import { Education } from "./components/Education";
 
-class App extends Component {
-  constructor() {
-    super();
+const App = () => {
+  // common detail part
+  const [commonDetails, setCommonDetails] = useState({
+    userName: "Your Name",
+    userNumber: "Your PhoneNumber",
+    userEmail: "Your Email",
+    userSite: "Your WebSite",
+    userSummary: "Little about you",
+    userSkills: "",
+  });
 
-    this.updateCommonDetails = this.updateCommonDetails.bind(this);
-    this.addWorkExpInput = this.addWorkExpInput.bind(this);
-    this.updateExp = this.updateExp.bind(this);
-    this.deleteExpInput = this.deleteExpInput.bind(this);
-    this.addEduInput = this.addEduInput.bind(this);
-    this.updateEdu = this.updateEdu.bind(this);
-    this.deleteEduInput = this.deleteEduInput.bind(this);
+  const updateCommonDetails = (e) => {
+    // dynamic solution
+    const targetElement = e.target.id;
 
-    this.state = {
-      name: "Your Name",
-      phoneNumber: "Your PhoneNumber",
-      email: "Your Email",
-      website: "Your WebSite",
-      summary: "Little about you",
-      skills: [],
-      // inputExp: [<ExperienceInput key="4dt6" />],
-      inExp: {
-        "4dt6": (
-          <ExperienceInput
-            key="4dt6"
-            ids={"4dt6"}
-            funcD={this.deleteExpInput}
-            funcUpdate={this.updateExp}
-          />
-        ),
-      },
-      exp: {
-        "4dt6": {
-          jobTitle: "Job Title",
-          compName: "Company Name",
-          startDate: "2023-01-01",
-          endDate: "2023-04-01",
-          expSummary: "-> Your Experience",
-        },
-      },
-      inEdu: {
-        gst42: (
-          <EducationInput
-            key={"gst42"}
-            ids={"gst42"}
-            funcD={this.deleteEduInput}
-            funcUpdate={this.updateEdu}
-          />
-        ),
-      },
-      edu: {
-        gst42: {
-          degName: "Degree Name",
-          uniName: "Institution Name",
-          compYear: "Year of completion",
-        },
-      },
-    };
-  }
-
-  updateCommonDetails(e) {
-    switch (e.target.id) {
-      case "username":
-        this.setState({
-          name: e.target.value,
-        });
-        break;
-
-      case "userNumber":
-        this.setState({
-          phoneNumber: e.target.value,
-        });
-        break;
-
-      case "userEmail":
-        this.setState({
-          email: e.target.value,
-        });
-        break;
-
-      case "userSite":
-        this.setState({
-          website: e.target.value,
-        });
-        break;
-
-      case "userSummary":
-        this.setState({
-          summary: e.target.value,
-        });
-        break;
-
-      case "userSkills":
-        const splitSkills = e.target.value.split(",");
-        this.setState({
-          skills: splitSkills,
-        });
-        break;
-
-      default:
-        console.log("error in common");
+    if (commonDetails.hasOwnProperty(targetElement)) {
+      setCommonDetails({
+        ...commonDetails,
+        [targetElement]: e.target.value,
+      });
+    } else {
+      console.log("error in common");
     }
-  }
 
-  addWorkExpInput() {
-    const { inExp, exp } = this.state;
+    // more readable but fixed solution
 
+    // switch (e.target.id) {
+    //   case "username":
+    //     setCommonDetails({
+    //       ...commonDetails,
+    //       name: e.target.value,
+    //     });
+    //     break;
+
+    //   case "userNumber":
+    //     setCommonDetails({
+    //       ...commonDetails,
+
+    //       phoneNumber: e.target.value,
+    //     });
+    //     break;
+
+    //   case "userEmail":
+    //     setCommonDetails({
+    //       ...commonDetails,
+
+    //       email: e.target.value,
+    //     });
+    //     break;
+
+    //   case "userSite":
+    //     setCommonDetails({
+    //       ...commonDetails,
+
+    //       website: e.target.value,
+    //     });
+    //     break;
+
+    //   case "userSummary":
+    //     setCommonDetails({
+    //       ...commonDetails,
+
+    //       summary: e.target.value,
+    //     });
+    //     break;
+
+    //   case "userSkills":
+    //     const splitSkills = e.target.value.split(",");
+    //     setCommonDetails({
+    //       ...commonDetails,
+
+    //       skills: splitSkills,
+    //     });
+    //     break;
+
+    //   default:
+    //     console.log("error in common");
+    // }
+  };
+
+  // experience part
+
+  const [inputExp, setInputExp] = useState({}); // input state
+
+  const [exp, setExp] = useState({});
+
+  const addExp = () => {
     const keyGen = generateUniqueKey();
-    const newExpInput = {
+    const newInputExp = {
       [keyGen]: (
         <ExperienceInput
           key={keyGen}
           ids={keyGen}
-          funcD={this.deleteExpInput}
-          funcUpdate={this.updateExp}
+          handelDelete={deleteExpInput}
+          handleChange={updateExp}
         />
       ),
     };
+
     const newExp = {
       [keyGen]: {
         jobTitle: "Job Title",
@@ -137,69 +124,68 @@ class App extends Component {
         expSummary: "-> Your Experience",
       },
     };
-    this.setState({
-      inExp: {
-        ...inExp,
-        ...newExpInput,
-      },
-      exp: {
-        ...exp,
-        ...newExp,
-      },
+
+    setInputExp({
+      ...inputExp,
+      ...newInputExp,
     });
-  }
 
-  updateExp(e) {
-    const { exp } = this.state;
-    const element = e.target.getAttribute("data-ids");
-    const currentExp = exp[element];
-
-    console.log(element);
-
-    this.setState({
-      exp: {
-        ...exp,
-        [element]: {
-          ...currentExp,
-          [e.target.className]: e.target.value,
-        },
-      },
+    setExp({
+      ...exp,
+      ...newExp,
     });
-  }
+  };
 
-  deleteExpInput(e) {
-    const { inExp, exp } = this.state;
+  const updateExp = (e) => {
     const element = e.target.getAttribute("data-ids");
 
-    const newExpInput = { ...inExp };
-    const newExp = { ...exp };
-    delete newExpInput[element];
-    delete newExp[element];
+    setExp((prevExp) => ({
+      ...prevExp,
+      [element]: {
+        ...prevExp[element],
+        [e.target.className]: e.target.value,
+      },
+    }));
+  };
 
-    this.setState({
-      inExp: {
-        ...newExpInput,
-      },
-      exp: {
-        ...newExp,
-      },
+  const deleteExpInput = (e) => {
+    const element = e.target.getAttribute("data-ids");
+
+    setInputExp((prevInputExp) => {
+      const newInputExp = { ...prevInputExp };
+
+      delete newInputExp[element];
+
+      return newInputExp;
     });
-  }
 
-  addEduInput() {
-    const { inEdu, edu } = this.state;
+    setExp((prevExp) => {
+      const newExp = { ...prevExp };
 
+      delete newExp[element];
+
+      return newExp;
+    });
+  };
+  //  education part
+
+  const [inputEdu, setInputEdu] = useState({});
+
+  const [edu, setEdu] = useState({});
+
+  const addEdu = () => {
     const keyGen = generateUniqueKey(5);
-    const newEduInput = {
+    const newInputEdu = {
       [keyGen]: (
         <EducationInput
           key={keyGen}
           ids={keyGen}
-          funcD={this.deleteEduInput}
-          funcUpdate={this.updateEdu}
+          handleDelete={deleteEduInput}
+          handleChange={updateEdu}
         />
       ),
     };
+
     const newEdu = {
       [keyGen]: {
         degName: "Degree Name",
@@ -208,54 +194,52 @@ class App extends Component {
       },
     };
 
-    this.setState({
-      inEdu: {
-        ...inEdu,
-        ...newEduInput,
-      },
-      edu: {
-        ...edu,
-        ...newEdu,
-      },
+    setInputEdu({
+      ...inputEdu,
+      ...newInputEdu,
     });
-  }
 
-  updateEdu(e) {
-    const { edu } = this.state;
+    setEdu({
+      ...edu,
+      ...newEdu,
+    });
+  };
+
+  const updateEdu = (e) => {
     const element = e.target.getAttribute("data-ids");
-    const currentEdu = edu[element];
 
-    this.setState({
-      edu: {
-        ...edu,
-        [element]: {
-          ...currentEdu,
-          [e.target.className]: e.target.value,
-        },
+    setEdu((prevEdu) => ({
+      ...prevEdu,
+      [element]: {
+        ...prevEdu[element],
+        [e.target.className]: e.target.value,
       },
-    });
-  }
+    }));
+  };
 
-  deleteEduInput(e) {
-    const { inEdu, edu } = this.state;
-
+  const deleteEduInput = (e) => {
     const element = e.target.getAttribute("data-ids");
-    const newEduInput = { ...inEdu };
-    const newEdu = { ...edu };
-    delete newEduInput[element];
-    delete newEdu[element];
 
-    this.setState({
-      inEdu: {
-        ...newEduInput,
-      },
-      edu: {
-        ...newEdu,
-      },
+    setInputEdu((prevInputEdu) => {
+      const newInputEdu = { ...prevInputEdu };
+
+      delete newInputEdu[element];
+
+      return newInputEdu;
     });
-  }
 
-  downloadCV() {
+    setEdu((prevEdu) => {
+      const newEdu = { ...prevEdu };
+
+      delete newEdu[element];
+
+      return newEdu;
+    });
+  };
+
+  // for downloading CV
+
+  const downloadCV = () => {
     const cv = document.getElementById("cv-holder");
     html2canvas(cv).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
@@ -263,50 +247,46 @@ class App extends Component {
       pdf.addImage(imgData, "JPEG", 0, 0);
       pdf.save("download.pdf");
     });
-  }
+  };
 
-  render() {
-    const { inExp, inEdu, exp, edu } = this.state;
+  return (
+    <div className="App">
+      <div className="inputForm">
+        <CommonDetailsInputs handleChange={updateCommonDetails} />
 
-    return (
-      <div className="App">
-        <div className="inputForm">
-          <CommonDetailsInputs func={this.updateCommonDetails} />
+        <HeadTitle title="Education Input" />
+        {Object.values(inputEdu)}
+        <button onClick={addEdu}>Add Education</button>
 
-          <HeadTitle title="Education Input" />
-          {Object.values(inEdu)}
-          <button onClick={this.addEduInput}>Add Education</button>
-
-          <HeadTitle title="Work Experience Input" />
-          {Object.values(inExp)}
-          <button onClick={this.addWorkExpInput}>Add Work Exp</button>
-        </div>
-        <div id="cv-holder">
-          <div className="commonDetailHolder">
-            <CommonDetails details={this.state} />
-            <Skills skill={this.state.skills} />
-          </div>
-
-          <div className="eduHolder">
-            <HeadTitle title="Education" />
-            {Object.values(edu).map((e) => {
-              return <Education data={e} key={generateUniqueKey(6)} />;
-            })}
-          </div>
-
-          <div className="expHolder">
-            <HeadTitle title="Experience" />
-            {Object.values(exp).map((e) => {
-              return <Experience data={e} key={generateUniqueKey(6)} />;
-            })}
-          </div>
-        </div>
-        <button id="downloadPdfBtn" onClick={this.downloadCV}>
-          DownLoad CV
-        </button>
+        <HeadTitle title="Work Experience Input" />
+        {Object.values(inputExp)}
+        <button onClick={addExp}>Add Work Exp</button>
       </div>
-    );
-  }
-}
+      <div id="cv-holder">
+        <div className="commonDetailHolder">
+          <CommonDetails details={commonDetails} />
+          <Skills skills={commonDetails.userSkills} />
+        </div>
+
+        <div className="eduHolder">
+          <HeadTitle title="Education" />
+          {Object.values(edu).map((e) => {
+            return <Education data={e} key={generateUniqueKey(6)} />;
+          })}
+        </div>
+
+        <div className="expHolder">
+          <HeadTitle title="Experience" />
+          {Object.values(exp).map((e) => {
+            return <Experience data={e} key={generateUniqueKey(6)} />;
+          })}
+        </div>
+      </div>
+      <button id="downloadPdfBtn" onClick={downloadCV}>
+        DownLoad CV
+      </button>
+    </div>
+  );
+};
 
 export default App;

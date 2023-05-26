@@ -2,7 +2,7 @@ export function EducationInput(props) {
   const ids = props.ids;
 
   return (
-    <div id={ids} onChange={props.funcUpdate} className="eduForm">
+    <div id={ids} onChange={props.handleChange} className="eduForm">
       <label>
         Education
         <input
@@ -33,7 +33,7 @@ export function EducationInput(props) {
       <button
         className="eduRemoveBtn"
         data-ids={ids}
-        onClick={props.funcD}
+        onClick={props.handleDelete}
       >
         Remove Education
       </button>
