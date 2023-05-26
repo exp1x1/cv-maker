@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { generateUniqueKey } from "./helpFunction";
 import html2canvas from "html2canvas";
@@ -248,6 +248,11 @@ const App = () => {
       pdf.save("download.pdf");
     });
   };
+
+  useEffect(() => {
+    addExp();
+    addEdu();
+  }, []);
 
   return (
     <div className="App">
